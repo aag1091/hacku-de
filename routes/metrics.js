@@ -1,6 +1,7 @@
 var _ = require('lodash');
 var step = require('step');
 var metrics = require('../models/metrics');
+var request = require('request');
 
 module.exports = function(app) {
 
@@ -27,6 +28,12 @@ module.exports = function(app) {
           res.send(payload);
         }
     )
+  });
+
+  app.get('/metrics-test', function(req, res) {
+    request('http://api.openweathermap.org/data/2.5/weather?q=norfolk,us', function(err, response) {
+      res.send(JSON.parse(response.body));
+    });
   });
 
 };
