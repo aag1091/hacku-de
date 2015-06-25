@@ -1,0 +1,98 @@
+{
+  "DM_RecentPhoneCallsByDay": {
+    "labels": [
+      "20150617",
+      "20150618",
+      "20150619",
+      "20150620",
+      "20150621",
+      "20150622",
+      "20150623",
+      "20150624"
+    ],
+    "seriesList": [
+      {
+        "seriesName": "Desktop",
+        "dataPoints": [
+          10946,
+          10700,
+          9688,
+          5482,
+          1930,
+          13718,
+          12404,
+          11444
+        ]
+      },
+      {
+        "seriesName": "Mobile",
+        "dataPoints": [
+          12901,
+          12293,
+          11473,
+          7150,
+          2677,
+          16485,
+          14613,
+          14158
+        ]
+      },
+      {
+        "seriesName": "Other",
+        "dataPoints": [
+          1183,
+          1260,
+          1180,
+          692,
+          356,
+          1619,
+          1417,
+          1513
+        ]
+      },
+      {
+        "seriesName": "Print",
+        "dataPoints": [
+          7158,
+          7856,
+          7418,
+          5118,
+          2432,
+          8530,
+          7493,
+          7391
+        ]
+      }
+    ],
+    "lastUpdated": "6/25/2015 10:51:38 AM"
+  },
+  "MobileGCGooglePageSpeed": {
+    "JSB_Timestamp": "6/25/2015 10:06 AM",
+    "kind": "pagespeedonline#result",
+    "id": "http://m.forrent.com/guestcard/1000010783",
+    "responseCode": 200,
+    "title": "Search Apartments For Rent and Rentals - Mobile ForRent.com",
+    "ruleGroups": {
+      "SPEED": {"score": 64},
+      "USABILITY": {"score": 98}
+    }
+  },
+  "OLTP_GuestCardVelocity": {
+    "labels": ["0"],
+    "seriesList": [
+      {
+        "seriesName": "Desktop",
+        "dataPoints": [29]
+      },
+      {
+        "seriesName": "Mobile",
+        "dataPoints": [27]
+      },
+      {
+        "seriesName": "Other",
+        "dataPoints": [15]
+      }
+    ],
+    "lastUpdated": "6/25/2015 10:51:52 AM"
+  }
+}

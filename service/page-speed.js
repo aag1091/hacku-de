@@ -3,7 +3,9 @@ var request = require('request');
 var moment = require('moment');
 var metrics = require('../models/metrics');
 
-exports.get = function(cb) {
+var THRESHOLD_UNIT = (180 / 100);
+
+exports.refresh = function(cb) {
 
   step(
       function() {
@@ -16,7 +18,8 @@ exports.get = function(cb) {
 
         var metric = {
           name: "page-speed",
-          score: speed,
+          score: speed.score,
+          threshold: Math.ceil(THRESHOLD_UNIT * speed.score),
           timestamp: moment().format('x')
         };
 
@@ -26,7 +29,3 @@ exports.get = function(cb) {
 
 };
 
-exports.range = {
-  min: 0,
-  max: 100
-};
