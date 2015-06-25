@@ -46,9 +46,10 @@ function randomScore(min, max) {
 function makeMetric(name, suffix) {
   var score = randomScore(0 ,180);
   var metric = {};
+  var _name = name.replace('-', '');
 
-  metric[name + '_score'] = score;
-  metric[name + '_alert'] = score < 50;
+  metric[_name + 'score'] = score;
+  metric[_name + 'alert'] = score < 50;
 
   return metric;
 }
