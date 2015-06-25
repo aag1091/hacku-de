@@ -1,35 +1,23 @@
-var step = require('step');
-var request = require('request');
-var DOMParser = require('xmldom').DOMParser;
-var xpath = require('xpath');
-var moment = require('moment');
-var metrics = require('../models/metrics');
+var _ = require('lodash');
+
+var serviceResolver = {
+  "app-score": require('../service/app-score'),
+  "page-speed": require('../service/page-speed')
+};
 
 module.exports = function(app) {
 
-  app.get('/pull/:metric', function(req, res) {
+  app.get('/pull/:metric', function(req, res, next) {
+    var metric = req.params.metric;
 
-    step(
-        function() {
-          request.get('https://play.google.com/store/apps/details?id=com.forrent.frmobile', this);
-        },
-        function(err, response) {
-          var doc = new DOMParser().parseFromString(response.body);
-          var score = xpath.select('//div[@class="score"]', doc)[0].lastChild.data;
-
-          var metric = {
-            name: "app_rating",
-            score: score,
-            timestamp: moment().format('x')
-          };
-
-          metrics.insert(metric, function(err, result) {
-            if(err) next(err);
-
-            res.send(result);
-          });
-        }
-    )
+    if(_.has(serviceResolver, metric)) {
+      serviceResolver[metric].get(function(err, result) {
+        if(err) next(err);
+        res.send(result);
+      });
+    } else {
+      throw Error("No metric available for " + metric);
+    }
 
   });
 };

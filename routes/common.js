@@ -18,7 +18,7 @@ module.exports = function(app) {
         score: randomScore(1, 10)
       },
       {
-        name: "page_speed",
+        name: "page-speed",
         range: {
           min: 1,
           max: 10
@@ -34,7 +34,7 @@ module.exports = function(app) {
         score: randomScore(1, 10)
       },
       {
-        name: "app_rating",
+        name: "app-score",
         range: {
           min: 1,
           max: 10
