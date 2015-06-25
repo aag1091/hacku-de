@@ -8,6 +8,7 @@ var db  = require('./db');
 // Load Routes
 require('./routes/common')(app);
 require('./routes/pull')(app);
+require('./routes/metrics')(app);
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
