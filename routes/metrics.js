@@ -5,10 +5,14 @@ var metrics = require('../models/metrics');
 module.exports = function(app) {
 
   app.get('/metrics', function(req, res) {
-    var metrics = makeMetric("app-score", ",")
-                + makeMetric("page-speed", ",")
-                + makeMetric("unique-visits", ",")
-                + makeMetric("app-errors");
+    var metrics = {};
+    _.merge(
+        metrics,
+        makeMetric("app-score"),
+        makeMetric("page-speed"),
+        makeMetric("unique-visits"),
+        makeMetric("app-errors")
+    );
 
     res.send(metrics);
   });
@@ -34,8 +38,12 @@ function randomScore(min, max) {
 
 function makeMetric(name, suffix) {
   var score = randomScore(0 ,180);
+  var metric = {};
 
-  return score + ", " + boolToString(score < 50) + (suffix ? suffix : "");
+  metric[name + '_score'] = score;
+  metric[name + '_alert'] = score < 50;
+
+  return metric;
 }
 
 function boolToString(b) {
