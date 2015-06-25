@@ -29,9 +29,11 @@ function createDb(err, dbs) {
 
 step(connect, listDbs, createDb);
 
-exports.connect = connect;
+exports.rdb = r.db(DB_NAME);
 
-exports.DB_NAME = DB_NAME;
+exports.connectThen = function(cb) {
+  step(connect, cb);
+};
 
 exports.createTable = function(tableName) {
   step(
@@ -54,6 +56,3 @@ exports.createTable = function(tableName) {
   );
 };
 
-exports.connectThen = function(cb) {
-  step(connect, cb);
-};
