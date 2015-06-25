@@ -4,6 +4,7 @@ var moment = require('moment');
 var metrics = require('../models/metrics');
 
 var THRESHOLD_UNIT = (180 / 100);
+var ALERT_THRESHOLD = Math.floor(THRESHOLD_UNIT * 60);
 
 exports.refresh = function(cb) {
 
@@ -14,12 +15,14 @@ exports.refresh = function(cb) {
       function(err, response) {
         if(err) return cb(err);
 
-        var speed = JSON.parse(response.body).MobileGCGooglePageSpeed.ruleGroups.SPEED;
+        var score = JSON.parse(response.body).MobileGCGooglePageSpeed.ruleGroups.SPEED.score;
+        var threshold = Math.ceil(THRESHOLD_UNIT * score);
 
         var metric = {
           name: "page-speed",
-          score: speed.score,
-          threshold: Math.ceil(THRESHOLD_UNIT * speed.score),
+          score: score,
+          threshold: threshold,
+          alert: threshold <= ALERT_THRESHOLD,
           timestamp: moment().format('x')
         };
 

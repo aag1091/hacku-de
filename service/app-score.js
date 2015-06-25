@@ -6,6 +6,7 @@ var moment = require('moment');
 var metrics = require('../models/metrics');
 
 var THRESHOLD_UNIT = (180 / 5);
+var ALERT_THRESHOLD = Math.floor(THRESHOLD_UNIT * 3);
 
 exports.refresh = function(cb) {
 
@@ -18,11 +19,14 @@ exports.refresh = function(cb) {
 
         var doc = new DOMParser().parseFromString(response.body);
         var score = xpath.select('//div[@class="score"]', doc)[0].lastChild.data;
+        var threshold = Math.ceil(THRESHOLD_UNIT * score);
+
 
         var metric = {
           name: "app-score",
           score: +score,
-          threshold: Math.ceil(THRESHOLD_UNIT * score),
+          threshold: threshold,
+          alert: threshold <= ALERT_THRESHOLD,
           timestamp: moment().format('x')
         };
 

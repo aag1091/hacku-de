@@ -53,8 +53,7 @@ function makePayload(row) {
   var payload = {};
   var name = row.group.replace("-", "");
   var threshold = row.reduction.threshold;
-  // @TODO not sure where to pull this from
-  var alert = threshold < 60;
+  var alert = row.reduction.alert;
 
   payload[name + "threshold"] = threshold;
   payload[name + "alert"] = alert;
