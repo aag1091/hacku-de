@@ -2,6 +2,7 @@ var step = require('step');
 var request = require('request');
 var moment = require('moment');
 var metrics = require('../../models/metrics');
+var metricsUtil = require('../../utils/metrics');
 
 var THRESHOLD_UNIT = (180 / 5);
 var ALERT_THRESHOLD = Math.floor(THRESHOLD_UNIT * 3);
@@ -10,7 +11,7 @@ exports.refresh = function (cb) {
 
   step(
       function () {
-        return 0;
+        return metricsUtil.randomScore(0, 5);
       },
       function (err, score) {
         if (err) return cb(err);
