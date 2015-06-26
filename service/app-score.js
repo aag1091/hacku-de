@@ -23,7 +23,7 @@ exports.refresh = function (cb) {
 
 
         var metric = {
-          name: "app-score",
+          name: "forrent-app-score",
           score: +score,
           threshold: threshold,
           alert: threshold <= ALERT_THRESHOLD,

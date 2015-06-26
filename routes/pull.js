@@ -3,7 +3,8 @@ var step = require('step');
 
 var serviceResolver = {
   "app-score": require('../service/app-score'),
-  "page-speed": require('../service/page-speed')
+  "page-speed": require('../service/page-speed'),
+  "leads": require('../service/leads')
 };
 
 module.exports = function (app) {

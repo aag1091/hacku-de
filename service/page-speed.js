@@ -19,7 +19,7 @@ exports.refresh = function (cb) {
         var threshold = Math.ceil(THRESHOLD_UNIT * score);
 
         var metric = {
-          name: "page-speed",
+          name: "forrent-page-speed",
           score: score,
           threshold: threshold,
           alert: threshold <= ALERT_THRESHOLD,
