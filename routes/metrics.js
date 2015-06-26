@@ -3,9 +3,9 @@ var step = require('step');
 var metrics = require('../models/metrics');
 var request = require('request');
 
-module.exports = function(app) {
+module.exports = function (app) {
 
-  app.get('/metrics', function(req, res) {
+  app.get('/metrics', function (req, res) {
     var metrics = {};
     _.merge(
         metrics,
@@ -18,20 +18,20 @@ module.exports = function(app) {
     res.send(metrics);
   });
 
-  app.get('/metrics-working', function(req, res, next) {
+  app.get('/metrics-working', function (req, res, next) {
     step(
-        function() {
+        function () {
           metrics.latestPayload(this);
         },
-        function(err, payload) {
-          if(err) next(err);
+        function (err, payload) {
+          if (err) next(err);
           res.send(payload);
         }
     )
   });
 
-  app.get('/metrics-test', function(req, res) {
-    request('http://api.openweathermap.org/data/2.5/weather?q=norfolk,us', function(err, response) {
+  app.get('/metrics-test', function (req, res) {
+    request('http://api.openweathermap.org/data/2.5/weather?q=norfolk,us', function (err, response) {
       res.send(JSON.parse(response.body));
     });
   });
@@ -43,8 +43,8 @@ function randomScore(min, max) {
   return Math.ceil(Math.random() * (max - min) + min);
 }
 
-function makeMetric(name, suffix) {
-  var score = randomScore(0 ,180);
+function makeMetric(name) {
+  var score = randomScore(0, 180);
   var metric = {};
   var _name = name.replace('-', '');
 
@@ -52,8 +52,4 @@ function makeMetric(name, suffix) {
   metric[_name + 'alert'] = score < 50;
 
   return metric;
-}
-
-function boolToString(b) {
-  return b ? 1 : 0;
 }

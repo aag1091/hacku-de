@@ -8,14 +8,14 @@ var metrics = require('../models/metrics');
 var THRESHOLD_UNIT = (180 / 5);
 var ALERT_THRESHOLD = Math.floor(THRESHOLD_UNIT * 3);
 
-exports.refresh = function(cb) {
+exports.refresh = function (cb) {
 
   step(
-      function() {
+      function () {
         request.get('https://play.google.com/store/apps/details?id=com.forrent.frmobile', this);
       },
-      function(err, response) {
-        if(err) return cb(err);
+      function (err, response) {
+        if (err) return cb(err);
 
         var doc = new DOMParser().parseFromString(response.body);
         var score = xpath.select('//div[@class="score"]', doc)[0].lastChild.data;

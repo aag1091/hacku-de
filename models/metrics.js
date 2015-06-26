@@ -12,14 +12,14 @@ db.createTable(tableName);
 
 var table = rdb.table(tableName);
 
-exports.insert = function(doc, cb) {
-  connectThen(function(err, conn) {
+exports.insert = function (doc, cb) {
+  connectThen(function (err, conn) {
     table.insert(doc).run(conn, cb);
   });
 };
 
-exports.getLatest = function(cb) {
-  connectThen(function(err, conn) {
+exports.getLatest = function (cb) {
+  connectThen(function (err, conn) {
     table
         .group("name")
         .max("timestamp")
@@ -27,24 +27,23 @@ exports.getLatest = function(cb) {
   });
 };
 
-exports.latestPayload = function(cb) {
+exports.latestPayload = function (cb) {
   step(
-      function() {
+      function () {
         exports.getLatest(this);
       },
-      function(err, results) {
+      function (err, results) {
         var payload = [];
 
-        results.each(function(err, row) {
+        results.each(function (err, row) {
           payload.push(makePayload(row));
-        }, function() {
+        }, function () {
           var _payload = {};
-          payload.forEach(function(p) {
+          payload.forEach(function (p) {
             _.merge(_payload, p);
           });
           cb(err, _payload);
         });
-
       }
   )
 };

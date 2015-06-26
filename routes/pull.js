@@ -6,32 +6,32 @@ var serviceResolver = {
   "page-speed": require('../service/page-speed')
 };
 
-module.exports = function(app) {
+module.exports = function (app) {
 
-  app.get('/pull/all', function(req, res) {
+  app.get('/pull/all', function (req, res) {
 
     step(
-        function() {
+        function () {
           var group = this.group();
-          Object.getOwnPropertyNames(serviceResolver).forEach(function(p){
-            serviceResolver[p].refresh(function(err, payload) {
-              if(err) console.error(err);
+          Object.getOwnPropertyNames(serviceResolver).forEach(function (p) {
+            serviceResolver[p].refresh(function (err, payload) {
+              if (err) console.error(err);
               group();
             });
           });
         },
-        function() {
+        function () {
           res.send('processed');
         }
     )
   });
 
-  app.get('/pull/:metric', function(req, res, next) {
+  app.get('/pull/:metric', function (req, res, next) {
     var metric = req.params.metric;
 
-    if(_.has(serviceResolver, metric)) {
-      serviceResolver[metric].refresh(function(err, result) {
-        if(err) next(err);
+    if (_.has(serviceResolver, metric)) {
+      serviceResolver[metric].refresh(function (err, result) {
+        if (err) next(err);
         res.send(result);
       });
     } else {
