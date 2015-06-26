@@ -9,10 +9,10 @@ module.exports = function (app) {
     var metrics = {};
     _.merge(
         metrics,
-        makeMetric("app-score"),
-        makeMetric("page-speed"),
-        makeMetric("unique-visits"),
-        makeMetric("app-errors")
+        makeMetric("as"),
+        makeMetric("ps"),
+        makeMetric("uv"),
+        makeMetric("ae")
     );
 
     res.send(metrics);
@@ -56,7 +56,7 @@ function makeMetric(name) {
   var metric = {};
   var _name = name.replace('-', '');
 
-  metric[_name + 'threshold'] = score;
+  metric[_name + 't'] = score;
   //metric[_name + 'alert'] = score < 50;
 
   return metric;

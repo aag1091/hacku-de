@@ -3,7 +3,7 @@ var request = require('request');
 var DOMParser = require('xmldom').DOMParser;
 var xpath = require('xpath');
 var moment = require('moment');
-var metrics = require('../models/metrics');
+var metrics = require('../../models/metrics');
 
 var THRESHOLD_UNIT = (180 / 5);
 var ALERT_THRESHOLD = Math.floor(THRESHOLD_UNIT * 3);

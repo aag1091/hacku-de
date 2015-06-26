@@ -1,7 +1,7 @@
 var step = require('step');
 var request = require('request');
 var moment = require('moment');
-var metrics = require('../models/metrics');
+var metrics = require('../../models/metrics');
 
 var THRESHOLD_UNIT = (180 / 100);
 var ALERT_THRESHOLD = Math.floor(THRESHOLD_UNIT * 60);

@@ -2,9 +2,11 @@ var _ = require('lodash');
 var step = require('step');
 
 var serviceResolver = {
-  "app-score": require('../service/app-score'),
-  "page-speed": require('../service/page-speed'),
-  "leads": require('../service/leads')
+  forrent: {
+    "app-score": require('../service/forrent/app-score'),
+    "page-speed": require('../service/forrent/page-speed'),
+    "leads": require('../service/forrent/leads')
+  }
 };
 
 module.exports = function (app) {
@@ -14,10 +16,12 @@ module.exports = function (app) {
     step(
         function () {
           var group = this.group();
-          Object.getOwnPropertyNames(serviceResolver).forEach(function (p) {
-            serviceResolver[p].refresh(function (err, payload) {
-              if (err) console.error(err);
-              group();
+          Object.getOwnPropertyNames(serviceResolver).forEach(function (c) {
+            Object.getOwnPropertyNames(serviceResolver[c]).forEach(function(p) {
+              serviceResolver[c][p].refresh(function (err, payload) {
+                if (err) console.error(err);
+                group();
+              });
             });
           });
         },
@@ -27,11 +31,12 @@ module.exports = function (app) {
     )
   });
 
-  app.get('/pull/:metric', function (req, res, next) {
+  app.get('/pull/:company/:metric', function (req, res, next) {
     var metric = req.params.metric;
+    var company = req.params.company;
 
-    if (_.has(serviceResolver, metric)) {
-      serviceResolver[metric].refresh(function (err, result) {
+    if (_.has(serviceResolver[company], metric)) {
+      serviceResolver[company][metric].refresh(function (err, result) {
         if (err) next(err);
         res.send(result);
       });
