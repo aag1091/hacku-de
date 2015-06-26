@@ -19,12 +19,20 @@ module.exports = function (app) {
   });
 
   app.get('/metrics-working', function (req, res, next) {
+
+    var companies = {
+      forrent: 0,
+      boattrader: 90,
+      other: 180
+    };
+
     step(
         function () {
-          metrics.latestPayload(this);
+          metrics.latestPayload("forrent", this);
         },
         function (err, payload) {
           if (err) next(err);
+          payload.company = companies.forrent;
           res.send(payload);
         }
     )

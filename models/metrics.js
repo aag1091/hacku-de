@@ -27,7 +27,7 @@ exports.getLatest = function (cb) {
   });
 };
 
-exports.latestPayload = function (cb) {
+exports.latestPayload = function (company, cb) {
   step(
       function () {
         exports.getLatest(this);
@@ -36,7 +36,7 @@ exports.latestPayload = function (cb) {
         var payload = [];
 
         results.each(function (err, row) {
-          payload.push(makePayload(row));
+          payload.push(makePayload(company, row));
         }, function () {
           var _payload = {};
           payload.forEach(function (p) {
@@ -48,9 +48,10 @@ exports.latestPayload = function (cb) {
   )
 };
 
-function makePayload(row) {
+function makePayload(company, row) {
   var payload = {};
-  var name = row.group.replace("-", "");
+  var regx = new RegExp(company + "|-", "g");
+  var name = row.group.replace(regx, "");
   var threshold = row.reduction.threshold;
   var alert = row.reduction.alert;
 
