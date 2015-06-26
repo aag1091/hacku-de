@@ -57,7 +57,7 @@ function makeMetric(name) {
   var _name = name.replace('-', '');
 
   metric[_name + 'threshold'] = score;
-  metric[_name + 'alert'] = score < 50;
+  //metric[_name + 'alert'] = score < 50;
 
   return metric;
 }
