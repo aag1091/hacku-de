@@ -4,7 +4,7 @@ var moment = require('moment');
 var metrics = require('../../models/metrics');
 var _ = require('lodash');
 
-var THRESHOLD_UNIT = (180 / 25);
+var THRESHOLD_UNIT = (180 / 50);
 var ALERT_THRESHOLD = THRESHOLD_UNIT; // 1 lead
 
 /**
@@ -32,7 +32,7 @@ exports.refresh = function (cb) {
         var threshold = Math.ceil(THRESHOLD_UNIT * leads);
 
         var metric = {
-          name: "forrent-leads",
+          name: "boattrader-leads",
           score: leads,
           threshold: threshold,
           alert: threshold <= ALERT_THRESHOLD,

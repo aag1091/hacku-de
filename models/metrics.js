@@ -18,9 +18,12 @@ exports.insert = function (doc, cb) {
   });
 };
 
-exports.getLatest = function (cb) {
+exports.getLatest = function (company, cb) {
   connectThen(function (err, conn) {
     table
+        .filter(
+        r.row("name").match("^" + company)
+    )
         .group("name")
         .max("timestamp")
         .run(conn, cb);
@@ -30,7 +33,7 @@ exports.getLatest = function (cb) {
 exports.latestPayload = function (company, cb) {
   step(
       function () {
-        exports.getLatest(this);
+        exports.getLatest(company, this);
       },
       function (err, results) {
         var payload = [];
