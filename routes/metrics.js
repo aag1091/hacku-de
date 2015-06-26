@@ -9,17 +9,26 @@ module.exports = function (app) {
     var metrics = {};
     _.merge(
         metrics,
-        makeMetric("as"),
-        makeMetric("ps"),
-        makeMetric("uv"),
-        makeMetric("ae")
+        makeMetric("app-score"),
+        makeMetric("page-speed"),
+        makeMetric("leads")
     );
+
+    metrics.company = randomScore(0, 180);
+
+    metrics.alert = false;
+    Object.getOwnPropertyNames(metrics).forEach(function(p) {
+      if (_.isBoolean(metrics[p]) && metrics[p] === true) {
+        metrics.alert = true;
+      }
+    });
 
     res.send(metrics);
   });
 
   app.get('/metrics-working', function (req, res, next) {
-
+    //var company = "forrent";
+    var company = "boattrader";
     var companies = {
       forrent: 0,
       boattrader: 90,
@@ -28,11 +37,19 @@ module.exports = function (app) {
 
     step(
         function () {
-          metrics.latestPayload("forrent", this);
+          metrics.latestPayload(company, this);
         },
         function (err, payload) {
           if (err) next(err);
-          payload.company = companies.forrent;
+          payload.company = companies[company];
+          payload.alert = false;
+
+          Object.getOwnPropertyNames(payload).forEach(function(p) {
+            if (_.isBoolean(payload[p]) && payload[p] === true) {
+              payload.alert = true;
+            }
+          });
+
           res.send(payload);
         }
     )
@@ -56,8 +73,8 @@ function makeMetric(name) {
   var metric = {};
   var _name = name.replace('-', '');
 
-  metric[_name + 't'] = score;
-  //metric[_name + 'alert'] = score < 50;
+  metric[_name + 'threshold'] = score;
+  metric[_name + 'alert'] = score < 50;
 
   return metric;
 }

@@ -6,6 +6,11 @@ var serviceResolver = {
     "app-score": require('../service/forrent/app-score'),
     "page-speed": require('../service/forrent/page-speed'),
     "leads": require('../service/forrent/leads')
+  },
+  boattrader: {
+    "app-score": require('../service/boattrader/app-score'),
+    "page-speed": require('../service/boattrader/page-speed'),
+    "leads": require('../service/boattrader/leads')
   }
 };
 
