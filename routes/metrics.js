@@ -1,6 +1,7 @@
 var _ = require('lodash');
 var step = require('step');
 var metrics = require('../models/metrics');
+var metricUtils = require('../utils/metrics');
 var request = require('request');
 
 module.exports = function (app) {
@@ -9,12 +10,12 @@ module.exports = function (app) {
     var metrics = {};
     _.merge(
         metrics,
-        makeMetric("app-score"),
-        makeMetric("page-speed"),
-        makeMetric("leads")
+        metricUtils.fakeMetric("app-score"),
+        metricUtils.fakeMetric("page-speed"),
+        metricUtils.fakeMetric("leads")
     );
 
-    metrics.company = randomScore(0, 180);
+    metrics.company = metricUtils.randomScore(0, 180);
 
     metrics.alert = false;
     Object.getOwnPropertyNames(metrics).forEach(function(p) {
@@ -62,19 +63,3 @@ module.exports = function (app) {
   });
 
 };
-
-// Some Helpers
-function randomScore(min, max) {
-  return Math.ceil(Math.random() * (max - min) + min);
-}
-
-function makeMetric(name) {
-  var score = randomScore(0, 180);
-  var metric = {};
-  var _name = name.replace('-', '');
-
-  metric[_name + 'threshold'] = score;
-  metric[_name + 'alert'] = score < 50;
-
-  return metric;
-}
