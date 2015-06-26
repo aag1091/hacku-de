@@ -27,14 +27,17 @@ module.exports = function (app) {
     res.send(metrics);
   });
 
+  var reqNum = 0;
   app.get('/metrics-working', function (req, res, next) {
-    //var company = "forrent";
-    var company = "boattrader";
     var companies = {
       forrent: 0,
       boattrader: 90,
-      other: 180
+      acme: 180
     };
+    var company = Object.getOwnPropertyNames(companies)[reqNum];
+
+    if(reqNum !== 2) reqNum++;
+    else reqNum = 0;
 
     step(
         function () {
