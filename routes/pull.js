@@ -11,6 +11,11 @@ var serviceResolver = {
     "app-score": require('../service/boattrader/app-score'),
     "page-speed": require('../service/boattrader/page-speed'),
     "leads": require('../service/boattrader/leads')
+  },
+  acme: {
+    "app-score": require('../service/acme/app-score'),
+    "page-speed": require('../service/acme/page-speed'),
+    "leads": require('../service/acme/leads')
   }
 };
 

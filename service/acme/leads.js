@@ -32,7 +32,7 @@ exports.refresh = function (cb) {
         var threshold = Math.ceil(THRESHOLD_UNIT * leads);
 
         var metric = {
-          name: "boattrader-leads",
+          name: "acme-leads",
           score: leads,
           threshold: threshold,
           alert: threshold <= ALERT_THRESHOLD,

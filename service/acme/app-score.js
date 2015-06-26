@@ -1,7 +1,5 @@
 var step = require('step');
 var request = require('request');
-var DOMParser = require('xmldom').DOMParser;
-var xpath = require('xpath');
 var moment = require('moment');
 var metrics = require('../../models/metrics');
 
@@ -20,7 +18,7 @@ exports.refresh = function (cb) {
         var threshold = Math.ceil(THRESHOLD_UNIT * score);
 
         var metric = {
-          name: "boattrader-app-score",
+          name: "acme-app-score",
           score: +score,
           threshold: threshold,
           alert: threshold <= ALERT_THRESHOLD,
